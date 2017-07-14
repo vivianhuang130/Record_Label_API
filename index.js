@@ -4,7 +4,8 @@ const
   logger = require('morgan'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  port = 3000
+  port = 3000,
+  Album = require('./models/Album.js')
 
 mongoose.connect('mongodb://localhost/record-label', (err) => {
   console.log(err || "Connected to MongoDB.")
@@ -23,8 +24,20 @@ app.get('/', (req, res) => {
 ///////////////////////////////////////////////
 
 // get all albums
+app.get('/albums', (req,res)=> {
+  Album.find({},(err, albums)=>{
+    if(err) return console.log(err);
+    res.json(albums)
+  })
+})
 
 // post a new album
+app.post('/albums', (req, res)=> {
+  Album.create(req.body, (err, album) => {
+    if (err)return console.log(err);
+    res.json(album)
+  })
+})
 
 // get a specific album
 
