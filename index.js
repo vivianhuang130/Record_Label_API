@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 // get all albums
 app.get('/albums', (req,res)=> {
   Album.find({},(err, albums)=>{
-    if(err) return console.log(err);
+    if(err) return console.log(err)
     res.json(albums)
   })
 })
@@ -34,7 +34,7 @@ app.get('/albums', (req,res)=> {
 // post a new album
 app.post('/albums', (req, res)=> {
   Album.create(req.body, (err, album) => {
-    if (err)return console.log(err);
+    if (err)return console.log(err)
     res.json(album)
   })
 })
@@ -50,6 +50,18 @@ app.post('/albums', (req, res)=> {
 // get all songs in an album
 
 // post a new song to a specific album
+  //which album?
+  //song details?
+    //push update into array
+    //save it
+app.post('/albums/:id/songs', (req, res) => {
+  Album.findById(req.params.id, (err, album) => { //find
+    album.songs.push(req.body) //add song to array
+    album.save((err) => { //save and only respond when u get the original request
+      res.json(album)
+    })
+  })
+})
 
 // get a specific song from a specific album
 
